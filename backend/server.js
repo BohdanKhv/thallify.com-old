@@ -19,8 +19,8 @@ app.use(express.urlencoded({ limit: '2mb', extended: false }));
 
 
 // Production routes
-app.use('/api/thallify/users', require('./routes/thallify/userRoutes'));
-app.use('/api/thallify/lists', require('./routes/thallify/listRoutes'));
+app.use('/api/thallify/profiles', require('./thallify/routes/profileRoutes'));
+app.use('/api/thallify/lists', require('./thallify/routes/listRoutes'));
 
 
 // Serv frontend
