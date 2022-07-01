@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { createList } from "../features/list/listSlice"
+import { createList, resetList } from "../features/list/listSlice"
 import { RangeItem, Result, Profile } from "../components"
 
 
@@ -12,7 +12,10 @@ const Home = () => {
   const [timeRange, setTimeRange] = useState("short_term")
   const [type, setType] = useState("Artists")
 
-  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   useEffect(() => {
     let promise = null
   
@@ -27,6 +30,7 @@ const Home = () => {
 
     return () => {
       promise && promise.abort()
+      dispatch(resetList())
     }
   }, [timeRange, type, dispatch, profile])
 
@@ -95,6 +99,7 @@ const Home = () => {
         itemLimit={itemLimit}
         type={type}
         isLoading={isLoading}
+        timeRange={timeRange}
       />
     :
       <Result

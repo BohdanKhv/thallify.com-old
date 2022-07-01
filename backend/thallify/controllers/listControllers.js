@@ -38,7 +38,7 @@ const createListRequest = async (data) => {
 
         if (response.status !== 200) {
             console.error(err.message);
-            return []
+            return {msg: 'Error creating list'};
         } else {
             const list = new List({
                 username: data.username,
@@ -52,7 +52,7 @@ const createListRequest = async (data) => {
         }
     } catch (err) {
         console.error(err.message);
-        return []
+        return {msg: 'Error creating list'};
     }
 }
 
@@ -84,10 +84,16 @@ const createList = async (req, res) => {
                 return res.status(200).json(list);
             } else {
                 const newList = await createListRequest(req.body);
+                if(newList.msg) {
+                    return res.status(500).json(newList);
+                }
                 return res.status(200).json(newList);
             }
         } else {
             const newList = await createListRequest(req.body);
+            if(newList.msg) {
+                return res.status(500).json(newList);
+            }
             return res.status(200).json(newList);
         }
     } catch (err) {

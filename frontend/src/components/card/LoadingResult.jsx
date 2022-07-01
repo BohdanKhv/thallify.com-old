@@ -6,7 +6,7 @@ const LoadingResult = ({i}) => {
         <div className={`bg-white flex${i !== 0 ? ' border-t' : ''}`}>
             <Skeleton 
                 className="bg-gray-100 text-black flex justify-center items-center text-3xl"
-                width="80"
+                width="128"
                 height="80"
                 animation="wave"
             />
