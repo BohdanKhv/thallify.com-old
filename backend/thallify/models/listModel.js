@@ -14,16 +14,10 @@ const listSchema = new mongoose.Schema({
     timeRange: {
         type: String,
         required: false,
-        enum: ['short_term', 'medium_term', 'long_term']
-    },
-    limit: {
-        type: Number,
-        required: false
     },
     type: {
         type: String,
         required: false,
-        enum: ['tracks', 'artists']
     },
     items: []
 }, { timestamps: true });

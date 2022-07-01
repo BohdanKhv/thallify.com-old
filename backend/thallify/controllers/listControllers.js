@@ -1,4 +1,8 @@
 const List = require('../models/listModel');
+const axios = require('axios');
+
+
+const SPOTIFY_API_URL = "https://api.spotify.com/v1/me/";
 
 
 // GET /api/thallify/lists/spotify/:id
@@ -29,19 +33,18 @@ const createListRequest = async (data) => {
                 Authorization: `Bearer ${data.token}`,
             }
         };
-        const response = await axios.get(`${SPOTIFY_API_URL}top/${data.type}?limit=${data.limit}&offset=0&time_range=${data.timeRange}`, config);
+
+        const response = await axios.get(`${SPOTIFY_API_URL}top/${data.type.toLowerCase()}?limit=50&offset=0&time_range=${data.timeRange}`, config);
 
         if (response.status !== 200) {
-            return res.status(500).json({
-                msg: 'Error getting top tracks'
-            });
+            console.error(err.message);
+            return []
         } else {
             const list = new List({
                 username: data.username,
                 spotifyId: data.spotifyId,
                 timeRange: data.timeRange,
                 type: data.type,
-                limit: data.limit,
                 items: response.data.items
             });
             await list.save();
@@ -49,7 +52,7 @@ const createListRequest = async (data) => {
         }
     } catch (err) {
         console.error(err.message);
-        return res.status(500).send('Server Error');
+        return []
     }
 }
 
@@ -61,7 +64,6 @@ const createList = async (req, res) => {
         const list = await List.findOne({ 
             spotifyId: req.body.spotifyId,
             timeRange: req.body.timeRange,
-            limit: req.body.limit,
             type: req.body.type
         }).sort({ createdAt: -1 });
 

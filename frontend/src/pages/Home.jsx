@@ -12,12 +12,24 @@ const Home = () => {
   const [timeRange, setTimeRange] = useState("short_term")
   const [type, setType] = useState("Artists")
 
+  
+  useEffect(() => {
+    const data = {
+      spotifyId: profile.id,
+      timeRange: timeRange,
+      type: type
+    }
+    const promise = dispatch(createList(data))
 
+    return () => {
+      promise.abort()
+    }
+  }, [timeRange, type, dispatch, profile])
 
   return (
     <>
     {profile &&
-    <div>
+    <div className="p-4">
       {/* <div className="pt-4 flex flex-col content-center justify-center">
         <div className="avatar justify-center">
           <div className="w-24 rounded-full">
@@ -26,10 +38,10 @@ const Home = () => {
         </div>
         <h3 className="text-3xl text-center mt-3">{profile.name}</h3>
       </div> */}
-      <h5 className="text-4xl text-center pt-5">
+      {/* <h5 className="text-4xl text-center pt-5">
         Create your list
       </h5>
-      <div class="divider max-w-md mx-auto border-white"/>
+      <div className="divider max-w-md mx-auto border-white"/> */}
       <div>
         <div className="mt-4 flex content-center justify-between gap-2 max-w-xl mx-auto">
           <RangeItem
@@ -49,60 +61,60 @@ const Home = () => {
       <div>
         <div className="mt-4 flex content-center justify-between gap-2 max-w-xl mx-auto">
           <RangeItem
-            onClick={() => setItemLimit(5)}
-            label="5"
-            secondaryLabel="Items"
-            active={itemLimit === 5}
-          />
-          <RangeItem
-            onClick={() => setItemLimit(10)}
-            label="10"
-            secondaryLabel="Items"
-            active={itemLimit === 10}
-          />
-          <RangeItem
-            onClick={() => setItemLimit(20)}
-            label="20"
-            secondaryLabel="Items"
-            active={itemLimit === 20}
-          />
-        </div>
-      </div>
-      <div>
-        <div className="mt-4 flex content-center justify-between gap-2 max-w-xl mx-auto">
-          <RangeItem
             onClick={() => setTimeRange("short_term")}
-            label="Short"
+            label="~1 Month"
             secondaryLabel="Range"
             active={timeRange === "short_term"}
           />
           <RangeItem
             onClick={() => setTimeRange("medium_term")}
-            label="Mid"
+            label="~6 Months"
             secondaryLabel="Range"
             active={timeRange === "medium_term"}
           />
           <RangeItem
             onClick={() => setTimeRange("long_term")}
-            label="Long"
+            label="Overall"
             secondaryLabel="Range"
             active={timeRange === "long_term"}
           />
         </div>
+      </div>
+      <div className="p-4 bg-white border-1 border-xl max-w-xl mx-auto rounded mt-4">
+        <div className="flex content-center justify-between text-xl text-black mb-2">
+          <h5>
+            List length
+          </h5>
+          <h5>
+            {itemLimit}
+          </h5>
+        </div>
+        <input type="range" min="5" max="50" value={itemLimit} onChange={(e) => setItemLimit(e.target.value)} className="range range-primary" step="1" />
+          <div className="w-full flex justify-between text-xs px-2">
+            <span>5</span>
+            <span>|</span>
+            <span>27</span>
+            <span>|</span>
+            <span>50</span>
+          </div>
       </div>
     </div>
     }
     {item && item.items ?
       <Result
         items={item.items}
+        itemLimit={itemLimit}
+        type={type}
+        isLoading={isLoading}
       />
-      :
+    :
       <Result
         placeholder
         itemLimit={itemLimit}
         type={type}
+        isLoading={isLoading}
       />
-    }
+      }
     </>
   )
 }

@@ -6,7 +6,7 @@ import AuthGate from './gates/AuthGate';
 const App = () => {
 
   return (
-    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 min-h-screen text-white mx-auto p-4">
+    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 min-h-screen">
       <Router>
         <Routes>
           <Route path='/' element={<AuthGate><Home/></AuthGate>} />

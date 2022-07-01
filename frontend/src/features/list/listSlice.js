@@ -17,8 +17,8 @@ export const createList = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             const token = thunkAPI.getState().user.user.accessToken;
-            const { username, spotifyId, timeRange, type, limit } = data;
-            return await listService.createList({ username, spotifyId, timeRange, type, limit, token });
+            const { username, spotifyId, timeRange, type } = data;
+            return await listService.createList({ username, spotifyId, timeRange, type, token });
         } catch (error) {
             const message =
                 (error.response &&

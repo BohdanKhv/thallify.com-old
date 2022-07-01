@@ -1,29 +1,46 @@
-const Result = ({items, placeholder, itemLimit, type}) => {
+const Result = ({items, placeholder, itemLimit, type, isLoading}) => {
     return (
-        <div className="result">
-            <div className="mt-4">
-                {placeholder &&
-                <div className="btn w-full btn-primary mb-4 drop-shadow-lg">
-                    <svg className="h-6 w-6 fill-white mr-2" viewBox="0 0 16 16">
-                        <path d="M9.5 2.672a.5.5 0 1 0 1 0V.843a.5.5 0 0 0-1 0v1.829Zm4.5.035A.5.5 0 0 0 13.293 2L12 3.293a.5.5 0 1 0 .707.707L14 2.707ZM7.293 4A.5.5 0 1 0 8 3.293L6.707 2A.5.5 0 0 0 6 2.707L7.293 4Zm-.621 2.5a.5.5 0 1 0 0-1H4.843a.5.5 0 1 0 0 1h1.829Zm8.485 0a.5.5 0 1 0 0-1h-1.829a.5.5 0 0 0 0 1h1.829ZM13.293 10A.5.5 0 1 0 14 9.293L12.707 8a.5.5 0 1 0-.707.707L13.293 10ZM9.5 11.157a.5.5 0 0 0 1 0V9.328a.5.5 0 0 0-1 0v1.829Zm1.854-5.097a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L8.646 5.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0l1.293-1.293Zm-3 3a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L.646 13.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0L8.354 9.06Z"/>
-                    </svg>
-                    Create your list
-                </div>}
-                <div className="flex flex-col content-center justify-between max-w-xl mx-auto bg-slate-800 rounded-lg overflow-hidden drop-shadow-lg">
-                    { placeholder ? 
+        <div className="result pb-4 max-w-xl mx-auto select-none">
+            <div>
+                <div className="flex flex-col content-center justify-between rounded-lg overflow-hidden drop-shadow-lg">
+                    { placeholder || isLoading ? 
                         Array.from({length: itemLimit}, (_, i) => 
-                            <div key={i} className={`w-full bg-white flex${i !== 0 ? ' border-t' : ''}`}>
-                                <div className="bg-gray-800 w-20 h-20 flex justify-center items-center text-3xl">
-                                    {i + 1}
+                            <div key={i} className={`bg-white flex${i !== 0 ? ' border-t' : ''}`}>
+                                <div className="bg-gray-100 text-black w-20 h-20 flex justify-center items-center text-3xl">
                                 </div>
-                                <div className="text-black w-full text-3xl flex h-20 items-center pl-2">
+                                <div className="text-black flex-grow text-xl h-20 pl-2 py-1 bg-center bg-cover bg-no-repeat">
                                     <div className="content-center h-max">
-                                        {type === "Artists" ? "Artist" : "Track"}
+                                        {type === "Artists" ? `${i+1}. Artist's loading . . .` : `${i+1}. Track's loading . . .`}
                                     </div>
                                 </div>
                             </div>
                         )
-                    : null}
+                    :
+                        items && items.slice(0, itemLimit).map((item, i) => (
+                            <div key={i} className={`bg-white flex${i !== 0 ? ' border-t' : ''}`}>
+                                <div className="bg-gray-100 text-black w-20 h-20 flex justify-center items-center text-3xl">
+                                    <img
+                                        alt="Avatar"
+                                        src={type === "Artists" ? item.images[2].url : item.album.images[0].url}
+                                        className="object-cover object-center h-full w-full"
+                                    />
+                                </div>
+                                <div className="text-black flex-grow text-xl h-20 pl-2 py-1 bg-center bg-cover bg-no-repeat">
+                                    <div className="content-center h-max">
+                                        {type === "Artists" ? 
+                                            i+1+'. '+item.name
+                                        : "Track"}
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className="btn w-full btn-primary mt-4 drop-shadow-lg">
+                    <svg className="h-6 w-6 fill-white mr-4" viewBox="0 0 16 16">
+                        <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                    </svg>
+                    Share this list
                 </div>
             </div>
         </div>

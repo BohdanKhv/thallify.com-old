@@ -2,8 +2,8 @@ import { SpotifyLogin } from './';
 
 const Login = () => {
     return (
-        <div className="container mx-auto px-4">
-            <div className="py-4 flex justify-center">
+        <div className="container mx-auto h-screen flex items-center justify-center">
+            <div className="flex justify-center">
                 <SpotifyLogin />
             </div>
         </div>

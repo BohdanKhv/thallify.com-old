@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = "/api/thallify/spotify/";
+const API_URL = "/api/thallify/lists/";
 
 
 // POST /api/thallify/lists/
