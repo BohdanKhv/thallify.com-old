@@ -8,7 +8,7 @@ const Home = () => {
   const dispatch = useDispatch()
   const { profile } = useSelector(state => state.user)
   const { item, isLoading } = useSelector(state => state.list)
-  const [itemLimit, setItemLimit] = useState(10)
+  const [itemLimit, setItemLimit] = useState(5)
   const [timeRange, setTimeRange] = useState("short_term")
   const [type, setType] = useState("Artists")
 

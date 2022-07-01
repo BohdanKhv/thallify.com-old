@@ -1,4 +1,4 @@
-const logo = <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_107_2)">
 <circle cx="100" cy="96" r="96" fill="#6419E6"/>
 </g>
@@ -19,7 +19,3 @@ const logo = <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/200
 </filter>
 </defs>
 </svg>
-
-export {
-    logo
-}
