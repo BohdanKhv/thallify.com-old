@@ -49,6 +49,14 @@ const Result = ({items, placeholder, itemLimit, type, isLoading, timeRange}) => 
                 Download an image
             </div>
         }
+            {isSaving && 
+            <div className="cover absolute z-10 bg-gradient-to-r from-cyan-500 to-blue-500 p-5 rounded-xl h-full overflow-hidden drop-shadow-lg"
+                style={{
+                    height: document.getElementById('image-node') ? document.getElementById('image-node').offsetHeight : 'auto',
+                    width: document.getElementById('image-node') ? document.getElementById('image-node').offsetWidth : 'auto',
+                }}
+                />
+            }
             <div id="image-node" className="bg-gradient-to-r from-cyan-500 to-blue-500 p-5 rounded-xl h-full overflow-hidden relative drop-shadow-lg">
                 <div className="text-white pb-3">
                     <div className="flex justify-between">
@@ -68,7 +76,7 @@ const Result = ({items, placeholder, itemLimit, type, isLoading, timeRange}) => 
                                 thallify.com
                             </p>
                             <p className="text-3xl">
-                                {profile.name+"'s"}
+                                {profile?.name+"'s"}
                             </p>
                             <p className="text-xl">
                             {type === "Artists" ? 
