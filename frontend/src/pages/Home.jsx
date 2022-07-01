@@ -1,49 +1,40 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createList } from "../features/list/listSlice"
-import { RangeItem, Result } from "../components"
+import { RangeItem, Result, Profile } from "../components"
 
 
 const Home = () => {
   const dispatch = useDispatch()
   const { profile } = useSelector(state => state.user)
-  const { item, isLoading, isError } = useSelector(state => state.list)
+  const { item, isLoading } = useSelector(state => state.list)
   const [itemLimit, setItemLimit] = useState(10)
   const [timeRange, setTimeRange] = useState("short_term")
   const [type, setType] = useState("Artists")
 
   
   useEffect(() => {
-    const data = {
-      spotifyId: profile.id,
-      timeRange: timeRange,
-      type: type
+    let promise = null
+  
+    if (profile) {
+      const data = {
+        spotifyId: profile.id,
+        timeRange: timeRange,
+        type: type
+      }
+      promise = dispatch(createList(data))
     }
-    const promise = dispatch(createList(data))
 
     return () => {
-      promise.abort()
+      promise && promise.abort()
     }
   }, [timeRange, type, dispatch, profile])
 
   return (
-    <>
-    {profile &&
-    <div className="p-4">
-      {/* <div className="pt-4 flex flex-col content-center justify-center">
-        <div className="avatar justify-center">
-          <div className="w-24 rounded-full">
-            <img src={profile.avatar} alt="Avatar" />
-          </div>
-        </div>
-        <h3 className="text-3xl text-center mt-3">{profile.name}</h3>
-      </div> */}
-      {/* <h5 className="text-4xl text-center pt-5">
-        Create your list
-      </h5>
-      <div className="divider max-w-md mx-auto border-white"/> */}
+    <div className="p-4 max-w-xl mx-auto">
+      <Profile/>
       <div>
-        <div className="mt-4 flex content-center justify-between gap-2 max-w-xl mx-auto">
+        <div className="mt-4 flex content-center justify-between gap-2">
           <RangeItem
             onClick={() => setType("Artists")}
             label="Artists"
@@ -59,7 +50,7 @@ const Home = () => {
         </div>
       </div>
       <div>
-        <div className="mt-4 flex content-center justify-between gap-2 max-w-xl mx-auto">
+        <div className="mt-4 flex content-center justify-between gap-2">
           <RangeItem
             onClick={() => setTimeRange("short_term")}
             label="~1 Month"
@@ -80,7 +71,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="p-4 bg-white border-1 border-xl max-w-xl mx-auto rounded mt-4">
+      <div className="p-4 bg-white border-1 border-xl rounded mt-4">
         <div className="flex content-center justify-between text-xl text-black mb-2">
           <h5>
             List length
@@ -98,8 +89,6 @@ const Home = () => {
             <span>50</span>
           </div>
       </div>
-    </div>
-    }
     {item && item.items ?
       <Result
         items={item.items}
@@ -115,7 +104,7 @@ const Home = () => {
         isLoading={isLoading}
       />
       }
-    </>
+    </div>
   )
 }
 

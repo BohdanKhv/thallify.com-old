@@ -1,7 +1,19 @@
 import RangeItem from "./input/RangeItem";
-import Result from "./image/Result";
+
+import Result from "./card/Result";
+import LoadingResult from "./card/LoadingResult";
+
+import Profile from "./user/Profile";
+
+import Skeleton from "./feedback/Skeleton";
 
 export {
     RangeItem,
-    Result
+
+    Result,
+    LoadingResult,
+
+    Profile,
+
+    Skeleton,
 }

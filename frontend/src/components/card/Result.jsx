@@ -1,35 +1,40 @@
+import { LoadingResult } from '../'
+
 const Result = ({items, placeholder, itemLimit, type, isLoading}) => {
     return (
-        <div className="result pb-4 max-w-xl mx-auto select-none">
+        <div className="result max-w-xl mx-auto select-none py-4">
             <div>
                 <div className="flex flex-col content-center justify-between rounded-lg overflow-hidden drop-shadow-lg">
                     { placeholder || isLoading ? 
                         Array.from({length: itemLimit}, (_, i) => 
-                            <div key={i} className={`bg-white flex${i !== 0 ? ' border-t' : ''}`}>
-                                <div className="bg-gray-100 text-black w-20 h-20 flex justify-center items-center text-3xl">
-                                </div>
-                                <div className="text-black flex-grow text-xl h-20 pl-2 py-1 bg-center bg-cover bg-no-repeat">
-                                    <div className="content-center h-max">
-                                        {type === "Artists" ? `${i+1}. Artist's loading . . .` : `${i+1}. Track's loading . . .`}
-                                    </div>
-                                </div>
-                            </div>
+                            <LoadingResult key={i} i={i} />
                         )
                     :
                         items && items.slice(0, itemLimit).map((item, i) => (
-                            <div key={i} className={`bg-white flex${i !== 0 ? ' border-t' : ''}`}>
-                                <div className="bg-gray-100 text-black w-20 h-20 flex justify-center items-center text-3xl">
+                            <div key={i} className={`bg-white flex h-32${i !== 0 ? ' border-t' : ''}`}>
+                                <div className="bg-gray-100 text-black w-32 h-32 flex justify-center items-center text-3xl" style={{minWidth: '128px'}}>
                                     <img
                                         alt="Avatar"
                                         src={type === "Artists" ? item.images[2].url : item.album.images[0].url}
                                         className="object-cover object-center h-full w-full"
                                     />
                                 </div>
-                                <div className="text-black flex-grow text-xl h-20 pl-2 py-1 bg-center bg-cover bg-no-repeat">
-                                    <div className="content-center h-max">
+                                <div className="flex flex-col justify-between text-white flex-grow text-xl h-32 pl-2 py-1 bg-center bg-cover bg-no-repeat"
+                                    style={{
+                                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(${type === "Artists" ? item.images[0].url : item.album.images[0].url})`
+                                    }}
+                                >
+                                    <div className="content-center h-max flex">
                                         {type === "Artists" ? 
-                                            i+1+'. '+item.name
+                                            item.name
                                         : "Track"}
+                                    </div>
+                                    <div className="flex flex-wrap">
+                                        {type === "Artists" ?
+                                            item.genres.slice(-2).map((genre, i, arr) => (
+                                                <div key={`genre-${i}`} className="text-white badge badge-outline mr-1 mb-1 text-xs capitalize">{ genre }</div>
+                                            ))
+                                        : null }
                                     </div>
                                 </div>
                             </div>
