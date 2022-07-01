@@ -1,3 +1,6 @@
+import thallify from './thallify.png';
+import thallify2 from './thallify-2.png';
+
 const logo = <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_107_2)">
 <circle cx="100" cy="96" r="96" fill="#6419E6"/>
@@ -19,7 +22,11 @@ const logo = <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/200
 </filter>
 </defs>
 </svg>
+const thallifyImg = thallify
+const thallify2Img = thallify2
 
 export {
-    logo
+    logo,
+    thallifyImg,
+    thallify2Img
 }

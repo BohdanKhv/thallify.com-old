@@ -94,7 +94,7 @@ const Result = ({items, placeholder, itemLimit, type, isLoading, timeRange}) => 
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col content-center justify-between rounded-lg overflow-hidden drop-shadow-lg">
+                <div className="flex flex-col content-center justify-between rounded-xl overflow-hidden drop-shadow-xl">
                     { placeholder || isLoading ? 
                         Array.from({length: itemLimit}, (_, i) => 
                             <LoadingResult key={i} i={i} />
